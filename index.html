@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цалин Тооцоогч</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>ГАЗЫН СТАНЦЫН ЦАЛИН ТОЦООГЧ</h2>
+    <form id="salary-form">
+        <div>
+            <label for="baseSalary">Үндсэн Цалин:</label>
+            <input type="number" id="baseSalary" placeholder="Үндсэн цалин оруулна уу" required>
+        </div>
+
+        <div>
+            <label for="hoursWorked">Ажилласан Цаг:</label>
+            <input type="number" id="hoursWorked" placeholder="Ажилласан цаг оруулна уу" required>
+        </div>
+
+        <div>
+            <label for="overtimeHours">Илүү цаг:</label>
+            <input type="number" id="overtimeHours" placeholder="Илүү цаг оруулна уу" required>
+        </div>
+
+        <div>
+            <label for="bonus">Нэмэгдсэн Цалин:</label>
+            <input type="number" id="bonus" placeholder="Нэмэгдсэн цалин оруулна уу" required>
+        </div>
+
+        <div>
+            <label for="deductions">Хасагдсан Мөнгө:</label>
+            <input type="number" id="deductions" placeholder="Хасагдсан мөнгө оруулна уу" required>
+        </div>
+
+        <button type="button" onclick="calculateSalary()">Цалин Тооцоолох</button>
+    </form>
+
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+    function calculateSalary() {
+        // Parse the inputs as numbers
+        const baseSalary = parseFloat(document.getElementById('baseSalary').value);
+        const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+        const overtimeHours = parseFloat(document.getElementById('overtimeHours').value);
+        const bonus = parseFloat(document.getElementById('bonus').value);
+        const deductions = parseFloat(document.getElementById('deductions').value);
+
+        // Validation: Ensure all inputs are valid numbers
+        if (isNaN(baseSalary) || isNaN(hoursWorked) || isNaN(overtimeHours) || isNaN(bonus) || isNaN(deductions)) {
+            alert("Бүх талбаруудад зөв тоон утга оруулна уу.");
+            return;
+        }
+
+        try {
+            // Calculate total salary (example calculation)
+            const totalSalary = baseSalary + (overtimeHours * (baseSalary / 160 * 1.5)) + bonus - deductions;
+
+            // Display result
+            document.getElementById('result').innerHTML = `
+                <strong>Тооцоолсон Цалин:</strong> ${totalSalary.toFixed(2)}₮<br>
+                <strong>Тайлбар:</strong><br>
+                Үндсэн Цалин: ${baseSalary.toFixed(2)}₮<br>
+                Ажилласан Цаг: ${hoursWorked} цаг<br>
+                Илүү цаг: ${overtimeHours} цаг<br>
+                Нэмэгдсэн Цалин: ${bonus.toFixed(2)}₮<br>
+                Хасагдсан Мөнгө: ${deductions.toFixed(2)}₮
+            `;
+        } catch (error) {
+            document.getElementById('result').innerHTML = `<strong>Алдаа:</strong> ${error.message}`;
+        }
+    }
+</script>
+
+</body>
+</html>
